@@ -1,0 +1,29 @@
+{
+  "name": "get-users",
+  "version": "1.0.0",
+  "description": "API to return people who are listed as either living in London, or whose current coordinates are within 50 miles of London.",
+  "main": "app/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-fix": "./node_modules/.bin/eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burhan-u/get-users.git"
+  },
+  "author": "burhan-u",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burhan-u/get-users/issues"
+  },
+  "homepage": "https://github.com/burhan-u/get-users#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "husky": "^7.0.4"
+  }
+}
