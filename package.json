@@ -4,7 +4,8 @@
   "description": "API to return people who are listed as either living in London, or whose current coordinates are within 50 miles of London.",
   "main": "app/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app/server.js",
+    "test": "jest",
     "lint": "./node_modules/.bin/eslint .",
     "lint-fix": "./node_modules/.bin/eslint . --fix"
   },
