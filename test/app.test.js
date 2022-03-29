@@ -13,4 +13,14 @@ describe('app', () => {
     const res = await request.get('/undefined');
     expect(res.status).toBe(404);
   });
+
+  it('should return 200 on healthcheck route', async () => {
+    const res = await request.get('/healthcheck');
+    expect(res.status).toBe(200);
+  });
+
+  it('should return an object with uptime on healthcheck route', async () => {
+    const res = await request.get('/healthcheck');
+    expect(res.body.uptime).toBeDefined();
+  });
 });
