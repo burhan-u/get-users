@@ -1,6 +1,9 @@
 const express = require('express');
+const expressLogger = require('./middleware/expressLogger');
 
 const app = express();
+
+app.use(expressLogger);
 
 app.get('/users', (req, res) => {
   res.status(200).json();
