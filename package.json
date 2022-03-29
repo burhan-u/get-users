@@ -37,7 +37,9 @@
     "express": "^4.17.3",
     "express-healthcheck": "^0.1.0",
     "helmet": "^5.0.2",
+    "js-yaml": "^4.1.0",
     "pino": "^7.9.2",
-    "pino-http": "^6.6.0"
+    "pino-http": "^6.6.0",
+    "swagger-ui-express": "^4.3.0"
   }
 }
