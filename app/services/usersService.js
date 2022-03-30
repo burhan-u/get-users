@@ -12,11 +12,13 @@ const getUsersWithinMilesRadius = (users, milesRadius) => {
 };
 
 const getUsers = async (repository) => {
+  const { MILES_RADIUS } = process.env;
   // eslint-disable-next-line no-useless-catch
   try {
     const allUsers = await repository.fetchAllUsers();
-    const londonUsers = await repository.fetchLondonUsers();
-    return allUsers.concat(londonUsers);
+    const usersLivingInLondon = await repository.fetchLondonUsers();
+    const usersCurrentlyInLondon = getUsersWithinMilesRadius(allUsers, MILES_RADIUS);
+    return mergeUsers(usersCurrentlyInLondon, usersLivingInLondon);
   } catch (error) {
     throw error;
   }

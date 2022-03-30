@@ -38,6 +38,93 @@ describe('getUsers service', () => {
       expect(error.message).toEqual('Error received from API');
     }
   });
+
+  it('should filter all users and return a merged list with no duplicates', async () => {
+    const mockRepositoryResolved = {
+      fetchAllUsers: jest.fn().mockResolvedValue([
+        {
+          id: 322,
+          first_name: 'Hugo',
+          last_name: 'Lynd',
+          email: 'hlynd8x@merriam-webster.com',
+          ip_address: '109.0.153.166',
+          latitude: 51.6710832,
+          longitude: 0.8078532,
+        },
+        {
+          id: 554,
+          first_name: 'Phyllys',
+          last_name: 'Hebbs',
+          email: 'phebbsfd@umn.edu',
+          ip_address: '100.89.186.13',
+          latitude: 51.5489435,
+          longitude: 0.3860497,
+        },
+        {
+          id: 19,
+          first_name: 'Jeane',
+          last_name: 'de Juares',
+          email: 'jdejuaresi@exblog.jp',
+          ip_address: '97.162.35.153',
+          latitude: 32.6797904,
+          longitude: -5.5781378,
+        },
+        {
+          id: 20,
+          first_name: 'Alard',
+          last_name: 'Kacheler',
+          email: 'akachelerj@google.co.uk',
+          ip_address: '161.87.0.198',
+          latitude: -6.9547303,
+          longitude: 107.3787448,
+        },
+      ]),
+      fetchLondonUsers: jest.fn().mockResolvedValue([
+        {
+          id: 322,
+          first_name: 'Hugo',
+          last_name: 'Lynd',
+          email: 'hlynd8x@merriam-webster.com',
+          ip_address: '109.0.153.166',
+          latitude: 51.6710832,
+          longitude: 0.8078532,
+        },
+        {
+          id: 554,
+          first_name: 'Phyllys',
+          last_name: 'Hebbs',
+          email: 'phebbsfd@umn.edu',
+          ip_address: '100.89.186.13',
+          latitude: 51.5489435,
+          longitude: 0.3860497,
+        },
+      ]),
+    };
+    const expected = [
+      {
+        id: 322,
+        first_name: 'Hugo',
+        last_name: 'Lynd',
+        email: 'hlynd8x@merriam-webster.com',
+        ip_address: '109.0.153.166',
+        latitude: 51.6710832,
+        longitude: 0.8078532,
+      },
+      {
+        id: 554,
+        first_name: 'Phyllys',
+        last_name: 'Hebbs',
+        email: 'phebbsfd@umn.edu',
+        ip_address: '100.89.186.13',
+        latitude: 51.5489435,
+        longitude: 0.3860497,
+      },
+    ];
+    const usersInLondon = await getUsers(mockRepositoryResolved);
+
+    expect(usersInLondon.length).toBe(2);
+    expect(usersInLondon).toEqual(expected);
+  });
 });
 
 describe('getUsersWithinMilesRadius', () => {
