@@ -1,4 +1,7 @@
+const array = require('lodash/array');
 const distanceFromLondon = require('../utils/distanceCalculator');
+
+const mergeUsers = (arr1, arr2) => array.uniqBy([...arr1, ...arr2], 'id');
 
 // eslint-disable-next-line arrow-body-style
 const getUsersWithinMilesRadius = (users, milesRadius) => {
@@ -19,4 +22,4 @@ const getUsers = async (repository) => {
   }
 };
 
-module.exports = { getUsers, getUsersWithinMilesRadius };
+module.exports = { getUsers, getUsersWithinMilesRadius, mergeUsers };
