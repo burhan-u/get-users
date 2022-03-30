@@ -40,6 +40,13 @@ describe('fetch all users data from external api', () => {
     expect(res).toEqual(mockResponseAllUsers);
   });
 
+  it('should return an empty array if no users are found', async () => {
+    axios.get.mockResolvedValueOnce({ data: [] });
+    const res = await fetchAllUsers();
+
+    expect(res).toEqual([]);
+  });
+
   it('it should throw an error if the server returns with an error', async () => {
     const errorResponse = { status: 500 };
     axios.get.mockRejectedValueOnce(errorResponse);
@@ -77,6 +84,13 @@ describe('fetch users living in london from external api', () => {
     const res = await fetchLondonUsers();
 
     expect(res).toEqual(mockResponseLondonUsers);
+  });
+
+  it('should return an empty array if no users are found', async () => {
+    axios.get.mockResolvedValueOnce({ data: [] });
+    const res = await fetchLondonUsers();
+
+    expect(res).toEqual([]);
   });
 
   it('it should throw an error if the server returns with an error', async () => {
