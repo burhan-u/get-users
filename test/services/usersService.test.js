@@ -1,6 +1,6 @@
-const getUsers = require('../../app/services/usersService');
+const { getUsers, getUsersWithinMilesRadius } = require('../../app/services/usersService');
 
-describe('usersService', () => {
+describe('getUsers service', () => {
   let mockRepository;
 
   beforeEach(() => {
@@ -37,5 +37,107 @@ describe('usersService', () => {
       expect(mockRepositoryRejected.fetchLondonUsers).toHaveBeenCalledTimes(0);
       expect(error.message).toEqual('Error received from API');
     }
+  });
+});
+
+describe('getUsersWithinMilesRadius', () => {
+  const milesRadius = 50;
+  const mockData = {
+    allUsers: [
+      {
+        id: 322,
+        first_name: 'Hugo',
+        last_name: 'Lynd',
+        email: 'hlynd8x@merriam-webster.com',
+        ip_address: '109.0.153.166',
+        latitude: 51.6710832,
+        longitude: 0.8078532,
+      },
+      {
+        id: 554,
+        first_name: 'Phyllys',
+        last_name: 'Hebbs',
+        email: 'phebbsfd@umn.edu',
+        ip_address: '100.89.186.13',
+        latitude: 51.5489435,
+        longitude: 0.3860497,
+      },
+      {
+        id: 19,
+        first_name: 'Jeane',
+        last_name: 'de Juares',
+        email: 'jdejuaresi@exblog.jp',
+        ip_address: '97.162.35.153',
+        latitude: 32.6797904,
+        longitude: -5.5781378,
+      },
+      {
+        id: 20,
+        first_name: 'Alard',
+        last_name: 'Kacheler',
+        email: 'akachelerj@google.co.uk',
+        ip_address: '161.87.0.198',
+        latitude: -6.9547303,
+        longitude: 107.3787448,
+      },
+    ],
+    usersInLondon: [
+      {
+        id: 322,
+        first_name: 'Hugo',
+        last_name: 'Lynd',
+        email: 'hlynd8x@merriam-webster.com',
+        ip_address: '109.0.153.166',
+        latitude: 51.6710832,
+        longitude: 0.8078532,
+      },
+      {
+        id: 554,
+        first_name: 'Phyllys',
+        last_name: 'Hebbs',
+        email: 'phebbsfd@umn.edu',
+        ip_address: '100.89.186.13',
+        latitude: 51.5489435,
+        longitude: 0.3860497,
+      },
+    ],
+    usersNotInLondon: [
+      {
+        id: 19,
+        first_name: 'Jeane',
+        last_name: 'de Juares',
+        email: 'jdejuaresi@exblog.jp',
+        ip_address: '97.162.35.153',
+        latitude: 32.6797904,
+        longitude: -5.5781378,
+      },
+      {
+        id: 20,
+        first_name: 'Alard',
+        last_name: 'Kacheler',
+        email: 'akachelerj@google.co.uk',
+        ip_address: '161.87.0.198',
+        latitude: -6.9547303,
+        longitude: 107.3787448,
+      },
+    ],
+  };
+
+  it('should return an array containing only users whose current location is within london', () => {
+    const filteredUsers = getUsersWithinMilesRadius(mockData.allUsers, milesRadius);
+
+    expect(filteredUsers).toEqual(mockData.usersInLondon);
+  });
+
+  it('should return the same array if all users are in london', () => {
+    const filteredUsers = getUsersWithinMilesRadius(mockData.usersInLondon, milesRadius);
+
+    expect(filteredUsers).toEqual(mockData.usersInLondon);
+  });
+
+  it('should return an empty array if there are no users in london', () => {
+    const filteredUsers = getUsersWithinMilesRadius(mockData.usersNotInLondon, milesRadius);
+
+    expect(filteredUsers).toEqual([]);
   });
 });
