@@ -8,4 +8,10 @@ const fetchAllUsers = () => axios.get(`${baseUrl}/users`)
     throw new Error('Error received from API');
   });
 
-module.exports = fetchAllUsers;
+const fetchLondonUsers = () => axios.get(`${baseUrl}/city/London/users`)
+  .then((response) => response.data)
+  .catch(() => {
+    throw new Error('Error received from API');
+  });
+
+module.exports = { fetchAllUsers, fetchLondonUsers };
