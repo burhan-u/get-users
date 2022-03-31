@@ -55,7 +55,7 @@ describe('fetch all users data from external api', () => {
     try {
       await fetchAllUsers();
     } catch (error) {
-      expect(error.message).toEqual('Error received from API');
+      expect(error.message).toEqual('Error received from external API');
     }
   });
 });
@@ -102,7 +102,7 @@ describe('fetch users living in london from external api', () => {
     try {
       await fetchCityUsers(city);
     } catch (error) {
-      expect(error.message).toEqual('Error received from API');
+      expect(error.message).toEqual('Error received from external API');
     }
   });
 });
