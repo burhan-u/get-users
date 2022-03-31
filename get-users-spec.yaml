@@ -31,6 +31,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Users'
+        '500':
+          description: Error message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /healthcheck:
     get:
       tags: [healthcheck]
@@ -92,3 +98,9 @@ components:
           type: number
           format: double
           example: 396.791393124
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Error received from API
