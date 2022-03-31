@@ -2,12 +2,13 @@ const fetchUsers = require('../repository/fetchUsers');
 const usersService = require('../services/usersService');
 
 const getCity = (city) => {
+  const defaultCity = 'London';
   const re = /^[a-zA-Z]+$/;
   if (city && re.test(city)) {
     const capitalisedCity = city.charAt(0).toUpperCase() + city.slice(1);
     return capitalisedCity;
   }
-  return 'London';
+  return defaultCity;
 };
 
 const getUsers = async (req, res) => {

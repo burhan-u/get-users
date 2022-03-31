@@ -12,10 +12,6 @@ const getUsersWithinMilesRadius = (users, city, milesRadius) => {
 };
 
 const getUsers = async (repository, city) => {
-  if (city === null || city === undefined) {
-    // eslint-disable-next-line no-param-reassign
-    city = 'London';
-  }
   const { MILES_RADIUS } = process.env;
   // eslint-disable-next-line no-useless-catch
   try {
