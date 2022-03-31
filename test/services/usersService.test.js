@@ -1,6 +1,7 @@
 const { getUsers, getUsersWithinMilesRadius, mergeUsers } = require('../../app/services/usersService');
 
 describe('getUsers service', () => {
+  const city = 'London';
   let mockRepository;
 
   beforeEach(() => {
@@ -11,13 +12,13 @@ describe('getUsers service', () => {
   });
 
   it('should call fetchAllUsers', async () => {
-    await getUsers(mockRepository);
+    await getUsers(mockRepository, city);
 
     expect(mockRepository.fetchAllUsers).toHaveBeenCalledTimes(1);
   });
 
   it('should call fetchCityUsers', async () => {
-    await getUsers(mockRepository);
+    await getUsers(mockRepository, city);
 
     expect(mockRepository.fetchCityUsers).toHaveBeenCalledTimes(1);
   });
@@ -32,7 +33,7 @@ describe('getUsers service', () => {
 
     expect.assertions(2);
     try {
-      await getUsers(mockRepositoryRejected);
+      await getUsers(mockRepositoryRejected, city);
     } catch (error) {
       expect(mockRepositoryRejected.fetchCityUsers).toHaveBeenCalledTimes(0);
       expect(error.message).toEqual('Error received from API');
@@ -120,7 +121,7 @@ describe('getUsers service', () => {
         longitude: 0.3860497,
       },
     ];
-    const usersInLondon = await getUsers(mockRepositoryResolved);
+    const usersInLondon = await getUsers(mockRepositoryResolved, city);
 
     expect(usersInLondon.length).toBe(2);
     expect(usersInLondon).toEqual(expected);
