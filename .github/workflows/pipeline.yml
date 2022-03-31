@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -27,14 +27,14 @@ jobs:
         run: npm install
 
       - name: Run Test
-      - run: npm test
+        run: npm test
 
   lint:
     name: Code Standards
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -45,4 +45,4 @@ jobs:
         run: npm install
 
       - name: Lint Code
-      - run: npm run lint
+        run: npm run lint
