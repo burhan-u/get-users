@@ -4,7 +4,9 @@
   "description": "API to return people who are listed as either living in London, or whose current coordinates are within 50 miles of London.",
   "main": "app/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app/server.js",
+    "dev": "nodemon --ext js --watch . ./app/server.js",
+    "test": "jest",
     "lint": "./node_modules/.bin/eslint .",
     "lint-fix": "./node_modules/.bin/eslint . --fix"
   },
@@ -24,6 +26,28 @@
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
-    "husky": "^7.0.4"
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "pino-pretty": "^7.6.0",
+    "supertest": "^6.2.2"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-healthcheck": "^0.1.0",
+    "haversine": "^1.1.1",
+    "helmet": "^5.0.2",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "pino": "^7.9.2",
+    "pino-http": "^6.6.0",
+    "swagger-ui-express": "^4.3.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "dotenv/config"
+    ]
   }
 }
