@@ -4,7 +4,7 @@ const usersService = require('../../app/services/usersService');
 jest.mock('../../app/services/usersService');
 
 describe('usersContoller', () => {
-  const mockRequest = () => {};
+  const mockRequest = { params: { city: 'city' } };
   const mockResponse = () => {
     const res = {};
     res.status = jest.fn().mockReturnValue(res);
@@ -16,7 +16,7 @@ describe('usersContoller', () => {
   let res;
 
   beforeEach(() => {
-    req = mockRequest();
+    req = mockRequest;
     res = mockResponse();
   });
 

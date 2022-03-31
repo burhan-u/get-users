@@ -14,6 +14,6 @@ const fetchUsers = (endpoint) => axios.get(`${baseUrl}/${endpoint}`)
   });
 
 const fetchAllUsers = () => fetchUsers('users');
-const fetchLondonUsers = () => fetchUsers('city/London/users');
+const fetchCityUsers = (city) => fetchUsers(`city/${city}/users`);
 
-module.exports = { fetchAllUsers, fetchLondonUsers };
+module.exports = { fetchAllUsers, fetchCityUsers };
