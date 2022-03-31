@@ -1,14 +1,12 @@
 const haversine = require('haversine');
+const cityMap = require('city-lat-long-map');
 
-const { LONDON_LAT } = process.env;
-const { LONDON_LONG } = process.env;
-
-const distanceFromLondon = (location) => {
-  const londonLocation = {
-    latitude: LONDON_LAT,
-    longitude: LONDON_LONG,
+const distanceFromCity = (location, city) => {
+  const cityLocation = {
+    latitude: cityMap[city].lat,
+    longitude: cityMap[city].lng,
   };
-  return haversine(location, londonLocation, { unit: 'mile' });
+  return haversine(location, cityLocation, { unit: 'mile' });
 };
 
-module.exports = distanceFromLondon;
+module.exports = distanceFromCity;

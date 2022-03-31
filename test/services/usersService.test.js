@@ -1,25 +1,26 @@
 const { getUsers, getUsersWithinMilesRadius, mergeUsers } = require('../../app/services/usersService');
 
 describe('getUsers service', () => {
+  const city = 'London';
   let mockRepository;
 
   beforeEach(() => {
     mockRepository = {
       fetchAllUsers: jest.fn().mockResolvedValue([{ a: 'a' }]),
-      fetchLondonUsers: jest.fn().mockResolvedValue([{ b: 'b' }]),
+      fetchCityUsers: jest.fn().mockResolvedValue([{ b: 'b' }]),
     };
   });
 
   it('should call fetchAllUsers', async () => {
-    await getUsers(mockRepository);
+    await getUsers(mockRepository, city);
 
     expect(mockRepository.fetchAllUsers).toHaveBeenCalledTimes(1);
   });
 
-  it('should call fetchLondonUsers', async () => {
-    await getUsers(mockRepository);
+  it('should call fetchCityUsers', async () => {
+    await getUsers(mockRepository, city);
 
-    expect(mockRepository.fetchLondonUsers).toHaveBeenCalledTimes(1);
+    expect(mockRepository.fetchCityUsers).toHaveBeenCalledTimes(1);
   });
 
   it('should catch errors thrown by external api', async () => {
@@ -27,14 +28,14 @@ describe('getUsers service', () => {
       fetchAllUsers: jest.fn().mockImplementation(() => {
         throw new Error('Error received from API');
       }),
-      fetchLondonUsers: jest.fn().mockResolvedValue([{ b: 'b' }]),
+      fetchCityUsers: jest.fn().mockResolvedValue([{ b: 'b' }]),
     };
 
     expect.assertions(2);
     try {
-      await getUsers(mockRepositoryRejected);
+      await getUsers(mockRepositoryRejected, city);
     } catch (error) {
-      expect(mockRepositoryRejected.fetchLondonUsers).toHaveBeenCalledTimes(0);
+      expect(mockRepositoryRejected.fetchCityUsers).toHaveBeenCalledTimes(0);
       expect(error.message).toEqual('Error received from API');
     }
   });
@@ -79,7 +80,7 @@ describe('getUsers service', () => {
           longitude: 107.3787448,
         },
       ]),
-      fetchLondonUsers: jest.fn().mockResolvedValue([
+      fetchCityUsers: jest.fn().mockResolvedValue([
         {
           id: 322,
           first_name: 'Hugo',
@@ -120,7 +121,7 @@ describe('getUsers service', () => {
         longitude: 0.3860497,
       },
     ];
-    const usersInLondon = await getUsers(mockRepositoryResolved);
+    const usersInLondon = await getUsers(mockRepositoryResolved, city);
 
     expect(usersInLondon.length).toBe(2);
     expect(usersInLondon).toEqual(expected);
@@ -128,6 +129,7 @@ describe('getUsers service', () => {
 });
 
 describe('getUsersWithinMilesRadius', () => {
+  const city = 'London';
   const milesRadius = 50;
   const mockData = {
     allUsers: [
@@ -211,19 +213,19 @@ describe('getUsersWithinMilesRadius', () => {
   };
 
   it('should return an array containing only users whose current location is within london', () => {
-    const filteredUsers = getUsersWithinMilesRadius(mockData.allUsers, milesRadius);
+    const filteredUsers = getUsersWithinMilesRadius(mockData.allUsers, city, milesRadius);
 
     expect(filteredUsers).toEqual(mockData.usersInLondon);
   });
 
   it('should return the same array if all users are in london', () => {
-    const filteredUsers = getUsersWithinMilesRadius(mockData.usersInLondon, milesRadius);
+    const filteredUsers = getUsersWithinMilesRadius(mockData.usersInLondon, city, milesRadius);
 
     expect(filteredUsers).toEqual(mockData.usersInLondon);
   });
 
   it('should return an empty array if there are no users in london', () => {
-    const filteredUsers = getUsersWithinMilesRadius(mockData.usersNotInLondon, milesRadius);
+    const filteredUsers = getUsersWithinMilesRadius(mockData.usersNotInLondon, city, milesRadius);
 
     expect(filteredUsers).toEqual([]);
   });

@@ -9,6 +9,11 @@ describe('app', () => {
     expect(res.status).toBe(200);
   });
 
+  it('should return 200 on users route with city param', async () => {
+    const res = await request.get('/users/london');
+    expect(res.status).toBe(200);
+  });
+
   it('should return 404 on undefined route', async () => {
     const res = await request.get('/undefined');
     expect(res.status).toBe(404);

@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { logger } = require('../utils/logger');
+const ExternalApiError = require('../errors/externalApiError');
 
 const baseUrl = process.env.USERS_REPOSITORY_URL;
 
@@ -10,10 +11,10 @@ const fetchUsers = (endpoint) => axios.get(`${baseUrl}/${endpoint}`)
   })
   .catch(() => {
     logger.error('Error received from external API');
-    throw new Error('Error received from API');
+    throw new ExternalApiError('Error received from external API', 500);
   });
 
 const fetchAllUsers = () => fetchUsers('users');
-const fetchLondonUsers = () => fetchUsers('city/London/users');
+const fetchCityUsers = (city) => fetchUsers(`city/${city}/users`);
 
-module.exports = { fetchAllUsers, fetchLondonUsers };
+module.exports = { fetchAllUsers, fetchCityUsers };

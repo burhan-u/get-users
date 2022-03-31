@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { fetchAllUsers, fetchLondonUsers } = require('../../app/repository/fetchUsers');
+const { fetchAllUsers, fetchCityUsers } = require('../../app/repository/fetchUsers');
 
 jest.mock('axios');
 
@@ -55,12 +55,13 @@ describe('fetch all users data from external api', () => {
     try {
       await fetchAllUsers();
     } catch (error) {
-      expect(error.message).toEqual('Error received from API');
+      expect(error.message).toEqual('Error received from external API');
     }
   });
 });
 
 describe('fetch users living in london from external api', () => {
+  const city = 'London';
   const mockResponseLondonUsers = [{
     id: 123,
     first_name: 'Katee',
@@ -74,21 +75,21 @@ describe('fetch users living in london from external api', () => {
   it('sends a request to the correct url', async () => {
     const url = 'https://bpdts-test-app.herokuapp.com/city/London/users';
     axios.get.mockResolvedValueOnce({});
-    await fetchLondonUsers();
+    await fetchCityUsers(city);
 
     expect(axios.get).toHaveBeenCalledWith(url);
   });
 
   it('should return an object with user data', async () => {
     axios.get.mockResolvedValueOnce({ data: mockResponseLondonUsers });
-    const res = await fetchLondonUsers();
+    const res = await fetchCityUsers(city);
 
     expect(res).toEqual(mockResponseLondonUsers);
   });
 
   it('should return an empty array if no users are found', async () => {
     axios.get.mockResolvedValueOnce({ data: [] });
-    const res = await fetchLondonUsers();
+    const res = await fetchCityUsers(city);
 
     expect(res).toEqual([]);
   });
@@ -99,9 +100,9 @@ describe('fetch users living in london from external api', () => {
 
     expect.assertions(1);
     try {
-      await fetchLondonUsers();
+      await fetchCityUsers(city);
     } catch (error) {
-      expect(error.message).toEqual('Error received from API');
+      expect(error.message).toEqual('Error received from external API');
     }
   });
 });

@@ -1,5 +1,5 @@
 # Get Users API
-This is an API built with Node.js and Express that retrieves user data from an external API, it then filters and merges this data before returning a list of all users who live in London or whose current location is within 50 miles of London.
+This is an API built with Node.js and Express that retrieves user data from an external API, it then filters and merges this data before returning a list of all users who live in a specific city or whose current location is within 50 miles of that city.
 
 ## Getting Started
 ### Prerequisites
@@ -25,7 +25,8 @@ npm start
 The application will then be available on `http://localhost:3000`  
 
 The following endpoints are available:  
-`/users` - Returns a list of users  
+`/users` - Returns a list of users in London  
+`/users/{city}` - Returns a list of users in specified city  
 `/api` - API documentation  
 `/metrics` - Prometheus metrics  
 `/healthcheck` - Simple healthcheck endpoint
