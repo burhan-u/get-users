@@ -2,7 +2,7 @@ openapi: 3.0.3
 
 info:
   title: Get Users API
-  description: API to return people who are listed as either living in London, or whose current coordinates are within 50 miles of London.
+  description: API to return people who are listed as either living in a specified city, or whose current coordinates are within 50 miles of that city.
   version: 1.0.0
 
 externalDocs:
@@ -22,7 +22,7 @@ paths:
   /users:
     get:
       tags: [users]
-      summary: Returns a list of users
+      summary: Returns a list of users in London
       description: Returns all users who live in, or whose current coordinates are within 50 miles of London.
       responses:
         '200':
@@ -31,8 +31,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Users'
+        '400':
+          description: City location error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: {message: "Unable to get location of city: London"}
         '500':
-          description: Error message
+          description: External API error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{city}:
+    get:
+      tags: [users]
+      summary: Returns a list of users in city
+      description: Returns all users who live in, or whose current coordinates are within 50 miles of specified city.
+      parameters:
+        - in: path
+          name: city
+          schema:
+            type: string
+            example: Paris
+          required: true
+          description: The city to search users in
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '400':
+          description: City location error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example: {message: "Unable to get location of city: Paris"}
+        '500':
+          description: External API error
           content:
             application/json:
               schema:
