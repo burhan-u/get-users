@@ -1,4 +1,5 @@
 const getUsersController = require('../../app/controllers/usersController');
+const ExternalApiError = require('../../app/errors/externalApiError');
 const usersService = require('../../app/services/usersService');
 
 jest.mock('../../app/services/usersService');
@@ -34,14 +35,25 @@ describe('usersContoller', () => {
     expect(response.json).toBeCalledWith([]);
   });
 
-  it('should return an error message and status 500 if usersService throws an error', async () => {
+  it('should return an error message and status 500 if usersService throws an external api error', async () => {
     usersService.getUsers.mockImplementation(() => {
-      throw new Error('Error received from API');
+      throw new ExternalApiError('Error received from external API', 500);
     });
-    const errorResponse = { message: 'Error received from API' };
+    const errorResponse = { message: 'Error received from external API' };
     const response = await getUsersController(req, res);
 
     expect(response.status).toBeCalledWith(500);
+    expect(response.json).toBeCalledWith(errorResponse);
+  });
+
+  it('should return an error message and status 400 if usersService throws an error', async () => {
+    usersService.getUsers.mockImplementation(() => {
+      throw new Error('City location error');
+    });
+    const errorResponse = { message: 'Unable to get location of city: City' };
+    const response = await getUsersController(req, res);
+
+    expect(response.status).toBeCalledWith(400);
     expect(response.json).toBeCalledWith(errorResponse);
   });
 });

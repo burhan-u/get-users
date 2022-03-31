@@ -1,3 +1,4 @@
+const ExternalApiError = require('../errors/externalApiError');
 const fetchUsers = require('../repository/fetchUsers');
 const usersService = require('../services/usersService');
 
@@ -17,7 +18,10 @@ const getUsers = async (req, res) => {
     const users = await usersService.getUsers(fetchUsers, city);
     return res.status(200).json(users);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    if (error instanceof ExternalApiError) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
+    return res.status(400).json({ message: `Unable to get location of city: ${city}` });
   }
 };
 
