@@ -23,4 +23,9 @@ describe('app', () => {
     const res = await request.get('/healthcheck');
     expect(res.body.uptime).toBeDefined();
   });
+
+  it('should return 200 on metrics route', async () => {
+    const res = await request.get('/metrics');
+    expect(res.status).toBe(200);
+  });
 });

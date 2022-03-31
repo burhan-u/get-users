@@ -43,6 +43,7 @@
     "lodash": "^4.17.21",
     "pino": "^7.9.2",
     "pino-http": "^6.6.0",
+    "prom-client": "^14.0.1",
     "swagger-ui-express": "^4.3.0"
   },
   "jest": {

@@ -37,6 +37,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /metrics:
+    get:
+      tags: [metrics]
+      summary: Exposes metrics
+      description: Returns Prometheus metrics.
+      responses:
+        '200':
+          description: Metrics and values
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Metric'
   /healthcheck:
     get:
       tags: [healthcheck]
@@ -104,3 +116,6 @@ components:
         message:
           type: string
           example: Error received from API
+    Metric:
+      type: string
+      example: node_process_cpu_user_seconds_total 0.250297
