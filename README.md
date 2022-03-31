@@ -27,6 +27,7 @@ The application will then be available on `http://localhost:3000`
 The following endpoints are available:  
 `/users` - Returns a list of users  
 `/api` - API documentation  
+`/metrics` - Prometheus metrics  
 `/healthcheck` - Simple healthcheck endpoint
 
 For more information, please check the API documentation on `http://localhost:300/api`
